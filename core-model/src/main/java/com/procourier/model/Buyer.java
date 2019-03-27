@@ -1,14 +1,18 @@
 package com.procourier.model;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 public final class Buyer {
+    private Long id;
     private String name;
     private Address address;
 
+    public Buyer() {
+    }
+
     public Buyer(String name, Address address) {
-        this.name = Objects.requireNonNull(name);
-        this.address = Objects.requireNonNull(address);
+        this.name = requireNonNull(name);
+        this.address = requireNonNull(address);
     }
 
     public String getName() {
@@ -17,5 +21,13 @@ public final class Buyer {
 
     public Address getAddress() {
         return address;
+    }
+
+    @Override
+    public String toString() {
+        return "Buyer{" +
+                "name='" + name + '\'' +
+                ", address=" + address +
+                '}';
     }
 }

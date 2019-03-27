@@ -1,9 +1,10 @@
 package com.procourier.model;
 
 import java.time.Instant;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
+import java.util.List;
+
+import static java.util.Collections.unmodifiableList;
+import static java.util.Objects.requireNonNull;
 
 public final class Order {
     private Long id;
@@ -11,24 +12,33 @@ public final class Order {
     private Buyer buyer;
     private Courier courier;
     private Instant submittedDate;
-    private Map<Product, Integer> orderLines;
+    private List<OrderLine> orderLines;
 
-    public Order(Long id, Seller seller, Buyer buyer, Courier courier, Instant submittedDate,
-                 Map<Product, Integer> orderLines) {
-        this.id = Objects.requireNonNull(id);
-        this.seller = Objects.requireNonNull(seller);
-        this.buyer = Objects.requireNonNull(buyer);
-        this.courier = Objects.requireNonNull(courier);
-        this.submittedDate = Objects.requireNonNull(submittedDate);
-        this.orderLines = Collections.unmodifiableMap(orderLines);
+    public Order() {
     }
 
-    public Order(Long id, Seller seller, Buyer buyer, Courier courier, Map<Product, Integer> orderLines) {
-        this(id, seller, buyer, courier, Instant.now(), orderLines);
+    public Order(Seller seller, Buyer buyer, Courier courier, List<OrderLine> orderLines) {
+        this.seller = seller;
+        this.buyer = buyer;
+        this.courier = courier;
+        this.orderLines = orderLines;
+    }
+
+    public Order(Seller seller, Buyer buyer,
+                 Courier courier, Instant submittedDate, List<OrderLine> orderLines) {
+        this.seller = requireNonNull(seller);
+        this.buyer = requireNonNull(buyer);
+        this.courier = requireNonNull(courier);
+        this.submittedDate = requireNonNull(submittedDate);
+        this.orderLines = unmodifiableList(orderLines);
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Seller getSeller() {
@@ -47,7 +57,18 @@ public final class Order {
         return submittedDate;
     }
 
-    public Map<Product, Integer> getOrderLines() {
+    public List<OrderLine> getOrderLines() {
         return orderLines;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                ", seller=" + seller +
+                ", buyer=" + buyer +
+                ", courier=" + courier +
+                ", submittedDate=" + submittedDate +
+                ", orderLines=" + orderLines +
+                '}';
     }
 }
