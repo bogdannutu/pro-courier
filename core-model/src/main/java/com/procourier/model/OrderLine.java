@@ -1,8 +1,18 @@
 package com.procourier.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "orderlines")
+
 public class OrderLine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Product product;
+
     private Long quantity;
 
     public OrderLine() {
