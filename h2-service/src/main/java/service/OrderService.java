@@ -7,6 +7,7 @@ import dao.OrderDao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class OrderService {
     private EntityManagerFactory emf;
@@ -33,14 +34,15 @@ public class OrderService {
         em.getTransaction().commit();
     }
 
-    public void addProduct(Product product) {
+    public Order getOrderById(Long id) {
         EntityManager em = emf.createEntityManager();
         OrderDao orderDao = new OrderDao(em);
-
-        //orice modif de INSERT, UPDATE, DELETE se face intr-o tranzactie
-        em.getTransaction().begin();
-        orderDao.addProduct(product);
-        em.getTransaction().commit();
+        return orderDao.getOrderById(id);
     }
 
+    public List<Order> getOrders(Long id) {
+        EntityManager em = emf.createEntityManager();
+        OrderDao orderDao = new OrderDao(em);
+        return orderDao.getOrders();
+    }
 }
